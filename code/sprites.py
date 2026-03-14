@@ -40,7 +40,7 @@ class WildFlower(Generic):
 class Tree(Generic):
     def __init__(self, pos, surf, groups, name):
         super().__init__(pos, surf, groups)
-
+ 
         self.health = 5
         self.alive = True
         stump_path = f'./graphics/stumps/{"small" if name == "Small" else "large"}.png'
@@ -60,7 +60,10 @@ class Tree(Generic):
 
     def check_death(self):
         if self.health <= 0:
-            print('dead')
+            self.image = self.stump_surf
+            self.rect = self.image.get_rect(midbottom=self.rect.midbottom)
+            self.hitbox = self.rect.copy().inflate(-10,-self.rect.height * 0.6)
+            self.alive = False
 
     def update(self,dt):
         if self.alive:
