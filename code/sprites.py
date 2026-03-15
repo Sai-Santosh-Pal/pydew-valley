@@ -54,7 +54,7 @@ class Particle(Generic):
             self.kill()
 
 class Tree(Generic):
-    def __init__(self, pos, surf, groups, name):
+    def __init__(self, pos, surf, groups, name, player_add):
         super().__init__(pos, surf, groups)
  
         self.health = 5
@@ -68,6 +68,8 @@ class Tree(Generic):
         self.apple_sprites = pygame.sprite.Group()
         self.create_fruit()
 
+        self.player_add = player_add
+
     def damage(self):
         self.health -= 1
         if len(self.apple_sprites.sprites()) > 0:
@@ -77,6 +79,7 @@ class Tree(Generic):
                 surf = random_apple.image, 
                 groups = self.groups()[0], 
                 z = LAYERS['fruit'])
+            self.player_add('apple')
             random_apple.kill()
 
     def check_death(self):
